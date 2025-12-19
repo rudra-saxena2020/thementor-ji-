@@ -69,7 +69,7 @@ Dedicated page for testing authentication features:
 
 ## API Endpoints
 
-The authentication service communicates with the backend at `http://localhost:3002` using these endpoints:
+The authentication service communicates with the backend at `https://three-0-4jps.onrender.com` using these endpoints:
 - `/auth/google`: Google OAuth initiation
 - `/auth/me`: Get user information
 - `/auth/refresh`: Refresh authentication token
