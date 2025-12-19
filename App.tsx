@@ -15,6 +15,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import AppTour from './components/AppTour';
 import OnboardingForm from './components/OnboardingForm';
+import AuthTestPage from './components/AuthTestPage';
 import { getDashboardGuidance } from './services/dashboardAi';
 import { PageName, AIResponse } from './types';
 import { ThemeProvider } from './context/ThemeContext';
@@ -157,6 +158,9 @@ const MainLayout: React.FC = () => {
             <Route path="/profile" element={<PageWrapper component={Profile} pageName="profile" setGuidance={setAiGuidance} currentGuidance={aiGuidance} />} />
             
             <Route path="/help" element={<HelpWrapper setGuidance={setAiGuidance} />} />
+            
+            {/* Authentication Test Page */}
+            <Route path="/auth-test" element={<AuthTestPage />} />
             
             {/* Redirect any other logged-in routes to dashboard */}
             <Route path="/login" element={<Navigate to="/" replace />} />

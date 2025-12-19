@@ -5,6 +5,7 @@ import { useToast } from '../context/ToastContext';
 import { Loader2, ArrowRight, Github, Twitter, Linkedin, Globe, Eye, EyeOff, AlertTriangle, Mail, Lock, Sparkles } from 'lucide-react';
 import { BrandLogo } from './BrandLogo';
 import { PREMIUM_AVATARS } from '../data/staticData';
+import { initiateGoogleLogin } from '../services/authService';
 
 const Login: React.FC = () => {
   const { login, loginAsGuest } = useAuth();
@@ -63,6 +64,10 @@ const Login: React.FC = () => {
 
   const handleSocialClick = (platform: string) => {
       showToast(`Connecting to ${platform}...`, 'info');
+  };
+
+  const handleGoogleLogin = () => {
+      initiateGoogleLogin();
   };
 
   return (
@@ -225,8 +230,8 @@ const Login: React.FC = () => {
                         <div className="flex-grow border-t border-slate-200 dark:border-slate-700"></div>
                       </div>
 
-                      <a
-                        href="https://mentor-omni-backend-2.onrender.com/auth/google" 
+                      <button
+                        onClick={handleGoogleLogin}
                         className="w-full flex items-center justify-center gap-3 px-6 py-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl text-slate-700 dark:text-slate-200 font-bold hover:bg-slate-50 dark:hover:bg-slate-700 transition-all hover:shadow-lg hover:-translate-y-0.5 group active:scale-[0.98]"
                       >
                           <svg className="w-5 h-5 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
@@ -236,7 +241,7 @@ const Login: React.FC = () => {
                             <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
                           </svg>
                           Login with Google
-                      </a>
+                      </button>
 
                       <div className="grid grid-cols-2 gap-4">
                             <button 

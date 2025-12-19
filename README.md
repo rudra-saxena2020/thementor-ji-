@@ -18,3 +18,10 @@ View your app in AI Studio: https://ai.studio/apps/drive/1hWIqN43ylj-hrpJFFH450P
 2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
    `npm run dev`
+
+## Deployment Fix
+
+If you encounter build errors related to `@react-three/fiber`, ensure you install dependencies with:
+`npm install --legacy-peer-deps`
+
+This resolves React version conflicts with the 3D avatar component.

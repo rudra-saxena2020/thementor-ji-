@@ -4,6 +4,7 @@ import { User, Mail, Award, BookOpen, Camera, Edit2, Save, X, Link as LinkIcon, 
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import PremiumAvatar from './PremiumAvatar';
+import UserAuthInfo from './UserAuthInfo';
 import { PREMIUM_AVATARS } from '../data/staticData';
 
 interface ProfileProps {
@@ -291,35 +292,39 @@ const Profile: React.FC<ProfileProps> = ({ aiGuidance }) => {
                </div>
            </div>
            
-           {/* Achievements */}
-           <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] border border-slate-200 dark:border-slate-700 p-6 md:p-8 shadow-sm">
-               <h3 className="font-bold text-slate-800 dark:text-white mb-8 flex items-center gap-3 text-lg">
-                   <div className="p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg text-amber-600"><Award size={20} /></div>
-                   Achievements
-               </h3>
-               <div className="space-y-4">
-                  <div className="flex items-start gap-4 p-4 bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-700/50 rounded-2xl border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow group">
-                    <div className="text-3xl bg-white dark:bg-slate-700 rounded-full p-2 shadow-sm group-hover:scale-110 transition-transform">🚀</div>
-                    <div>
-                      <h4 className="font-bold text-slate-800 dark:text-white text-sm">Early Bird</h4>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Completed 3 sessions before 9 AM</p>
-                      <div className="mt-2 text-[10px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded-md inline-block">UNLOCKED</div>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4 p-4 bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-700/50 rounded-2xl border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow group">
-                    <div className="text-3xl bg-white dark:bg-slate-700 rounded-full p-2 shadow-sm group-hover:scale-110 transition-transform">📚</div>
-                    <div>
-                      <h4 className="font-bold text-slate-800 dark:text-white text-sm">Note Taker</h4>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Uploaded 20+ study documents</p>
-                      <div className="mt-2 h-1.5 w-20 bg-slate-200 dark:bg-slate-600 rounded-full overflow-hidden">
-                          <div className="h-full bg-amber-500 w-3/4"></div>
+           {/* Achievements & Auth Info */}
+           <div className="space-y-8">
+               <UserAuthInfo />
+               
+               <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] border border-slate-200 dark:border-slate-700 p-6 md:p-8 shadow-sm">
+                   <h3 className="font-bold text-slate-800 dark:text-white mb-8 flex items-center gap-3 text-lg">
+                       <div className="p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg text-amber-600"><Award size={20} /></div>
+                       Achievements
+                   </h3>
+                   <div className="space-y-4">
+                      <div className="flex items-start gap-4 p-4 bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-700/50 rounded-2xl border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow group">
+                        <div className="text-3xl bg-white dark:bg-slate-700 rounded-full p-2 shadow-sm group-hover:scale-110 transition-transform">🚀</div>
+                        <div>
+                          <h4 className="font-bold text-slate-800 dark:text-white text-sm">Early Bird</h4>
+                          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Completed 3 sessions before 9 AM</p>
+                          <div className="mt-2 text-[10px] font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 px-2 py-0.5 rounded-md inline-block">UNLOCKED</div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  
-                  <button className="w-full py-3 text-sm font-bold text-slate-500 hover:text-slate-800 dark:hover:text-white transition-colors border border-dashed border-slate-300 dark:border-slate-600 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800">
-                      View All Achievements
-                  </button>
+                      <div className="flex items-start gap-4 p-4 bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-700/50 rounded-2xl border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow group">
+                        <div className="text-3xl bg-white dark:bg-slate-700 rounded-full p-2 shadow-sm group-hover:scale-110 transition-transform">📚</div>
+                        <div>
+                          <h4 className="font-bold text-slate-800 dark:text-white text-sm">Note Taker</h4>
+                          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">Uploaded 20+ study documents</p>
+                          <div className="mt-2 h-1.5 w-20 bg-slate-200 dark:bg-slate-600 rounded-full overflow-hidden">
+                              <div className="h-full bg-amber-500 w-3/4"></div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <button className="w-full py-3 text-sm font-bold text-slate-500 hover:text-slate-800 dark:hover:text-white transition-colors border border-dashed border-slate-300 dark:border-slate-600 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800">
+                          View All Achievements
+                      </button>
+                   </div>
                </div>
            </div>
        </div>

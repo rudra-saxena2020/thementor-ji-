@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Test</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8fafc;
+            color: #334155;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #6366f1;
+            margin-bottom: 10px;
+        }
+        .feature {
+            background-color: #f1f5f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .feature h3 {
+            color: #4f46e5;
+            margin-top: 0;
+        }
+        .link {
+            display: inline-block;
+            background-color: #4f46e5;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            margin: 10px;
+            transition: background-color 0.3s;
+        }
+        .link:hover {
+            background-color: #4338ca;
+        }
+        code {
+            background-color: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Authentication Features Test</h1>
+        <p>Test the authentication features implemented in the Tutor Ji application.</p>
+        
+        <div class="feature">
+            <h3>1. Google OAuth Login</h3>
+            <p>Users can authenticate using their Google accounts through the Login page.</p>
+            <p>Try it: <a class="link" href="http://localhost:5174/#/login" target="_blank">Login Page</a></p>
+        </div>
+        
+        <div class="feature">
+            <h3>2. Token Refresh</h3>
+            <p>Extend user sessions without requiring re-login through token refresh.</p>
+            <p>Try it: <a class="link" href="http://localhost:5174/#/auth-test" target="_blank">Auth Test Page</a></p>
+        </div>
+        
+        <div class="feature">
+            <h3>3. User Information Display</h3>
+            <p>View detailed user information and authentication status.</p>
+            <p>Try it: <a class="link" href="http://localhost:5174/#/profile" target="_blank">Profile Page</a></p>
+        </div>
+        
+        <div class="feature">
+            <h3>4. Secure Logout</h3>
+            <p>Safely log out and clear authentication tokens.</p>
+            <p>You can test this on either the Profile page or Auth Test page.</p>
+        </div>
+        
+        <h2>Implementation Details</h2>
+        <p>The authentication system uses JWT tokens stored in localStorage and communicates with the backend at <code>http://localhost:3002</code>.</p>
+        
+        <h3>Key Components:</h3>
+        <ul>
+            <li><code>AuthService</code> - Centralized service for authentication API calls</li>
+            <li><code>AuthContext</code> - Manages authentication state throughout the app</li>
+            <li><code>UserAuthInfo</code> - Displays auth info in the Profile page</li>
+            <li><code>AuthTestPage</code> - Dedicated page for testing authentication features</li>
+        </ul>
+    </div>
+</body>
+</html>

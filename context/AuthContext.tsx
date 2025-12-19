@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { jwtDecode } from "jwt-decode";
 import { PREMIUM_AVATARS } from '../data/staticData';
+import { refreshToken as refreshAuthToken, logout as logoutUser } from '../services/authService';
 
 // 7️⃣ SECURITY DISCLAIMER (MANDATORY)
 // This auth flow is MVP-level and frontend-only. Token authenticity is not verified server-side.
@@ -38,6 +39,7 @@ interface AuthContextType {
   logout: () => void;
   completeOnboarding: () => void;
   updateProfile: (data: Partial<User>) => void;
+  refreshToken: () => Promise<boolean>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -250,7 +252,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, 800);
   };
 
-  const logout = () => {
+  const logout = async () => {
+    // Call backend logout endpoint
+    await logoutUser();
+    
+    // Clear local state
     localStorage.removeItem('auth_token');
     setUser(null);
     setIsAuthenticated(false);
@@ -271,6 +277,52 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
   };
 
+  const refreshToken = async (): Promise<boolean> => {
+    try {
+      const currentToken = localStorage.getItem('auth_token');
+      if (!currentToken) return false;
+
+      const response = await refreshAuthToken(currentToken);
+      
+      if (response.token) {
+        // Save new token
+        localStorage.setItem('auth_token', response.token);
+        
+        // Decode and update user data
+        const decoded: any = jwtDecode(response.token);
+        const userData = normalizeUser(decoded);
+        
+        // Merge with stored profile
+        const storedProfile = getStoredProfile(userData.id);
+        const finalUser: User = storedProfile ? { 
+          ...storedProfile,
+          name: userData.name,
+          email: userData.email,
+          avatar: userData.avatar, 
+          id: userData.id, 
+          plan: userData.plan, 
+          exp: userData.exp,
+          class: storedProfile.class || userData.class,
+          bio: storedProfile.bio || userData.bio,
+          location: storedProfile.location || userData.location,
+          joinedDate: storedProfile.joinedDate || userData.joinedDate
+        } : userData;
+        
+        setUser(finalUser);
+        saveStoredProfile(finalUser);
+        return true;
+      }
+      
+      // If refresh failed, logout user
+      logout();
+      return false;
+    } catch (error) {
+      console.error('Token refresh failed:', error);
+      logout();
+      return false;
+    }
+  };
+
   return (
     <AuthContext.Provider value={{ 
       isAuthenticated, 
@@ -281,7 +333,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       loginAsGuest, 
       logout, 
       completeOnboarding,
-      updateProfile
+      updateProfile,
+      refreshToken
     }}>
       {children}
     </AuthContext.Provider>

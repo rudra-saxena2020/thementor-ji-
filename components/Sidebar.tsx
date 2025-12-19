@@ -64,6 +64,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       items: [
         { name: 'Profile', icon: User, path: '/profile', id: 'nav-item-profile' },
         { name: 'Settings', icon: Settings, path: '/settings', id: 'nav-item-settings' },
+        { name: 'Auth Test', icon: Shield, path: '/auth-test', id: 'nav-item-auth-test' },
         { name: 'Help & Support', icon: HelpCircle, path: '/help', id: 'nav-item-help' },
       ]
     }
