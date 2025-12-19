@@ -1,5 +1,4 @@
 {
-  // Updated dependencies to fix Vercel build error
   "name": "mentor-ji-dashboard",
   "version": "0.1.0",
   "private": true,
