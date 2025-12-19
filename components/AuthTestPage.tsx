@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
-import { User, Mail, Key, RefreshCw, LogOut, Shield, Calendar } from 'lucide-react';
+import { User, Mail, Key, RefreshCw, LogOut, Shield, Calendar, Download } from 'lucide-react';
 
 const AuthTestPage: React.FC = () => {
-  const { user, isAuthenticated, refreshToken, logout } = useAuth();
+  const { user, isAuthenticated, refreshToken, logout, fetchUserProfile } = useAuth();
   const { showToast } = useToast();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isFetchingProfile, setIsFetchingProfile] = useState(false);
 
   const handleRefreshToken = async () => {
     setIsRefreshing(true);
@@ -34,6 +35,22 @@ const AuthTestPage: React.FC = () => {
       showToast('Error during logout', 'error');
     } finally {
       setIsLoggingOut(false);
+    }
+  };
+
+  const handleFetchProfile = async () => {
+    setIsFetchingProfile(true);
+    try {
+      const success = await fetchUserProfile();
+      if (success) {
+        showToast('User profile updated successfully!', 'success');
+      } else {
+        showToast('Failed to fetch user profile', 'error');
+      }
+    } catch (error) {
+      showToast('Error fetching user profile', 'error');
+    } finally {
+      setIsFetchingProfile(false);
     }
   };
 
@@ -118,6 +135,15 @@ const AuthTestPage: React.FC = () => {
         </div>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <button
+            onClick={handleFetchProfile}
+            disabled={isFetchingProfile}
+            className="flex items-center justify-center gap-2 px-6 py-3 bg-purple-500 hover:bg-purple-600 text-white rounded-xl font-bold transition-colors disabled:opacity-70"
+          >
+            <Download size={20} className={isFetchingProfile ? 'animate-spin' : ''} />
+            {isFetchingProfile ? 'Fetching Profile...' : 'Fetch Profile'}
+          </button>
+          
           <button
             onClick={handleRefreshToken}
             disabled={isRefreshing}

@@ -10,23 +10,15 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.1.3",
-<<<<<<< HEAD
-    "@react-three/fiber": "^9.4.2",
-=======
     "@react-three/fiber": "^8.17.10",
     "@react-three/drei": "^9.115.0",
->>>>>>> 7d4f810eccad3566d879718d1b22678e3fecd9ad
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.395.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.23.0",
     "recharts": "^2.12.7",
-<<<<<<< HEAD
-    "three": "^0.182.0"
-=======
     "three": "^0.169.0"
->>>>>>> 7d4f810eccad3566d879718d1b22678e3fecd9ad
   },
   "devDependencies": {
     "@types/react": "^18.3.3",

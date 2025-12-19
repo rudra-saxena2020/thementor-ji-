@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { jwtDecode } from "jwt-decode";
 import { PREMIUM_AVATARS } from '../data/staticData';
-import { refreshToken as refreshAuthToken, logout as logoutUser } from '../services/authService';
+import { refreshToken as refreshAuthToken, logout as logoutUser, getUserInfo as fetchUserInfo } from '../services/authService';
 
 // 7️⃣ SECURITY DISCLAIMER (MANDATORY)
 // This auth flow is MVP-level and frontend-only. Token authenticity is not verified server-side.
@@ -40,6 +40,7 @@ interface AuthContextType {
   completeOnboarding: () => void;
   updateProfile: (data: Partial<User>) => void;
   refreshToken: () => Promise<boolean>;
+  fetchUserProfile: () => Promise<boolean>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -323,6 +324,45 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const fetchUserProfile = async (): Promise<boolean> => {
+    try {
+      const currentToken = localStorage.getItem('auth_token');
+      if (!currentToken) return false;
+
+      const response = await fetchUserInfo(currentToken);
+      
+      if (response.user) {
+        // Update user data
+        const userData = response.user;
+        
+        // Merge with stored profile
+        const storedProfile = getStoredProfile(userData.id);
+        const finalUser: User = storedProfile ? { 
+          ...storedProfile,
+          name: userData.name,
+          email: userData.email,
+          avatar: userData.avatar, 
+          id: userData.id, 
+          plan: userData.plan, 
+          exp: userData.exp,
+          class: storedProfile.class || userData.class,
+          bio: storedProfile.bio || userData.bio,
+          location: storedProfile.location || userData.location,
+          joinedDate: storedProfile.joinedDate || userData.joinedDate
+        } : userData;
+        
+        setUser(finalUser);
+        saveStoredProfile(finalUser);
+        return true;
+      }
+      
+      return false;
+    } catch (error) {
+      console.error('Fetching user profile failed:', error);
+      return false;
+    }
+  };
+
   return (
     <AuthContext.Provider value={{ 
       isAuthenticated, 
@@ -334,7 +374,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       logout, 
       completeOnboarding,
       updateProfile,
-      refreshToken
+      refreshToken,
+      fetchUserProfile
     }}>
       {children}
     </AuthContext.Provider>

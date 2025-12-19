@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { RefreshCw, LogOut, User, Mail, Key } from 'lucide-react';
+import { RefreshCw, LogOut, User, Mail, Key, Download } from 'lucide-react';
 import { useToast } from '../context/ToastContext';
 
 const UserAuthInfo: React.FC = () => {
-  const { user, refreshToken, logout } = useAuth();
+  const { user, refreshToken, logout, fetchUserProfile } = useAuth();
   const { showToast } = useToast();
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [isFetchingProfile, setIsFetchingProfile] = useState(false);
 
   const handleRefreshToken = async () => {
     setIsRefreshing(true);
@@ -34,6 +35,22 @@ const UserAuthInfo: React.FC = () => {
       showToast('Error during logout', 'error');
     } finally {
       setIsLoggingOut(false);
+    }
+  };
+
+  const handleFetchProfile = async () => {
+    setIsFetchingProfile(true);
+    try {
+      const success = await fetchUserProfile();
+      if (success) {
+        showToast('User profile updated successfully!', 'success');
+      } else {
+        showToast('Failed to fetch user profile', 'error');
+      }
+    } catch (error) {
+      showToast('Error fetching user profile', 'error');
+    } finally {
+      setIsFetchingProfile(false);
     }
   };
 
@@ -81,6 +98,15 @@ const UserAuthInfo: React.FC = () => {
       </div>
       
       <div className="flex gap-3 mt-6">
+        <button
+          onClick={handleFetchProfile}
+          disabled={isFetchingProfile}
+          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-purple-500 hover:bg-purple-600 text-white rounded-xl font-bold text-sm transition-colors disabled:opacity-70"
+        >
+          <Download size={16} className={isFetchingProfile ? 'animate-spin' : ''} />
+          {isFetchingProfile ? 'Fetching...' : 'Fetch Profile'}
+        </button>
+        
         <button
           onClick={handleRefreshToken}
           disabled={isRefreshing}
