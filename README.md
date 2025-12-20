@@ -2,20 +2,49 @@
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
 
-# Run and deploy your AI Studio app
+# Tutor Ji - AI Powered Study Companion
 
-This contains everything you need to run your app locally.
+This project is a React-based educational platform enhanced with AI capabilities.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1hWIqN43ylj-hrpJFFH450PzjbL-PWLfv
+## Project Structure
+
+The project follows a modular and scalable structure designed for maintainability and separation of concerns.
+
+```
+Root/
+├── src/                    # Primary source code
+│   ├── components/         # Reusable UI components (colocated with styles/tests)
+│   ├── pages/              # Page-level components (views)
+│   ├── services/           # API services and external integrations (e.g., AI, Auth)
+│   ├── context/            # React Context providers (Global state)
+│   ├── utils/              # Shared utility functions
+│   ├── data/               # Static and mock data files
+│   ├── assets/             # Static assets (images, icons)
+│   ├── app.tsx             # Main application component
+│   └── main.tsx            # Application entry point
+├── tests/                  # Test suites
+│   ├── unit/               # Unit tests
+│   └── integration/        # Integration tests
+├── docs/                   # Project documentation
+├── config/                 # Configuration files
+└── public/                 # Public static files
+```
+
+### Key Conventions
+
+- **File Naming**: Kebab-case (e.g., `user-auth-info.tsx`, `dashboard-ai.ts`) is used for all files and directories.
+- **Colocation**: Related files are kept together.
+- **Components**: Reusable UI elements located in `src/components`.
+- **Pages**: Top-level views located in `src/pages`.
+- **Services**: Business logic and API calls in `src/services`.
 
 ## Run Locally
 
-**Prerequisites:**  Node.js
-
+**Prerequisites:** Node.js
 
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+2. Set the `GEMINI_API_KEY` in `.env.local` to your Gemini API key.
 3. Run the app:
    `npm run dev`
 
