@@ -65,6 +65,12 @@
     --ring: 212.7 26.8% 83.9%;
   }
 
+  html, body, #root {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+  }
+
   body {
     @apply antialiased bg-background text-foreground transition-colors duration-300;
     font-feature-settings: "rlig" 1, "calt" 1;
@@ -83,6 +89,34 @@
   .premium-card {
     @apply bg-card text-card-foreground rounded-xl border border-border shadow-sm hover:shadow-md transition-all duration-300;
   }
+
+  .bg-ethereal {
+    @apply bg-[#F5F7FA] dark:bg-[#0F172A];
+  }
+
+  /* Notebook Ruled Paper Pattern */
+  .notebook-paper {
+    background-color: #fffcf5;
+    background-image: linear-gradient(#e2e8f0 1px, transparent 1px);
+    background-size: 100% 28px; /* Match line height */
+    position: relative;
+  }
+
+  .dark .notebook-paper {
+    background-color: #1e293b;
+    background-image: linear-gradient(#334155 1px, transparent 1px);
+  }
+
+  .notebook-paper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 48px;
+    width: 2px;
+    background-color: #f87171; /* Red margin */
+    opacity: 0.4;
+  }
 }
 
 /* Custom Scrollbar */
@@ -97,4 +131,17 @@
 
 ::-webkit-scrollbar-thumb {
   @apply bg-muted-foreground/20 rounded-full hover:bg-muted-foreground/40 transition-colors;
+  background: rgba(168, 85, 247, 0.3);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 85, 247, 0.6);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 85, 247, 0.6);
 }

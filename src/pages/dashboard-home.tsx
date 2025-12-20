@@ -228,7 +228,7 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({ aiGuidance }) => {
                  </div>
                  <p className="mt-4 text-sm font-medium text-slate-500 text-center">You're crushing your Physics goals today!</p>
              </div>
-         </div>
+         </Card>
 
          {/* Motivational Carousel */}
          <Card variant="glass" className="lg:col-span-2 p-8 rounded-[2.5rem] relative overflow-hidden flex flex-col justify-center">

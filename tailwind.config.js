@@ -38,6 +38,9 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
         // Premium Brand Colors
         brand: {
           50: '#f0f9ff',
@@ -70,6 +73,9 @@ export default {
         'scale-in': 'scaleIn 0.3s ease-out',
         'float': 'float 6s ease-in-out infinite',
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+        'orb-breath': 'orbBreath 4s ease-in-out infinite',
+        'wave': 'wave 1.5s infinite linear',
       },
       keyframes: {
         'accordion-down': {
@@ -95,6 +101,18 @@ export default {
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-20px)' },
+        },
+        pulseGlow: {
+          '0%, 100%': { boxShadow: '0 0 20px rgba(168, 85, 247, 0.4)' },
+          '50%': { boxShadow: '0 0 40px rgba(168, 85, 247, 0.7)' },
+        },
+        orbBreath: {
+          '0%, 100%': { transform: 'scale(1)', filter: 'brightness(1)' },
+          '50%': { transform: 'scale(1.05)', filter: 'brightness(1.1)' },
+        },
+        wave: {
+          '0%': { transform: 'scale(1)', opacity: '0.8' },
+          '100%': { transform: 'scale(2)', opacity: '0' },
         }
       },
       boxShadow: {

@@ -21,6 +21,9 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../context/auth-context';
 import { useToast } from '../context/toast-context';
+import { Button } from './ui/button';
+import { Card } from './ui/card';
+import { cn } from '../utils/cn';
 
 // --- Shared Types ---
 interface StepProps {
@@ -37,9 +40,9 @@ const FloatingCard = ({ children, delay = 0 }: { children?: React.ReactNode, del
     style={{ animationDelay: `${delay}ms` }}
   >
     <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300 opacity-0 group-hover:opacity-100"></div>
-    <div className="relative bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-700 transition-all duration-300 hover:shadow-xl hover:scale-[1.01]">
+    <Card variant="glass" className="relative hover:border-blue-300 dark:hover:border-blue-700 transition-all duration-300 hover:shadow-xl hover:scale-[1.01]">
       {children}
-    </div>
+    </Card>
   </div>
 );
 
@@ -509,47 +512,37 @@ const OnboardingForm = () => {
             {/* Navigation */}
             <div className="flex gap-4 mt-10">
               {currentStep > 0 && (
-                <button
-                  type="button"
+                <Button
+                  variant="ghost"
                   onClick={handlePrev}
-                  className="px-6 sm:px-8 h-14 sm:h-16 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-2xl font-bold text-lg transition-all flex items-center justify-center gap-2 hover:scale-105 active:scale-95"
+                  className="px-6 sm:px-8 h-14 sm:h-16 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-2xl font-bold text-lg hover:scale-105 active:scale-95"
                 >
                   <ChevronLeft size={24} />
                   <span className="hidden sm:inline">Back</span>
-                </button>
+                </Button>
               )}
               
               {currentStep < totalSteps - 1 ? (
-                <button
-                  type="button"
+                <Button
                   onClick={handleNext}
                   disabled={!isStepValid()}
-                  className="flex-1 h-14 sm:h-16 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white rounded-2xl font-black text-lg shadow-xl shadow-blue-500/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 hover:scale-105 active:scale-95 relative overflow-hidden group"
+                  className="flex-1 h-14 sm:h-16 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 text-white rounded-2xl font-black text-lg shadow-xl shadow-blue-500/30 border-none hover:scale-105 active:scale-95 group overflow-hidden"
                 >
                   <span className="relative z-10">Continue</span>
                   <ChevronRight size={24} className="relative z-10" />
                   <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700"></div>
-                </button>
+                </Button>
               ) : (
-                <button
-                  type="button"
+                <Button
                   onClick={handleSubmit}
-                  disabled={isSubmitting}
-                  className="flex-1 h-14 sm:h-16 bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-700 hover:via-teal-700 hover:to-cyan-700 text-white rounded-2xl font-black text-lg shadow-xl shadow-emerald-500/30 transition-all flex items-center justify-center gap-2 hover:scale-105 active:scale-95 relative overflow-hidden group disabled:opacity-70 disabled:cursor-not-allowed"
+                  isLoading={isSubmitting}
+                  loadingText="Saving..."
+                  className="flex-1 h-14 sm:h-16 bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-700 hover:via-teal-700 hover:to-cyan-700 text-white rounded-2xl font-black text-lg shadow-xl shadow-emerald-500/30 border-none hover:scale-105 active:scale-95 group overflow-hidden"
                 >
-                  {isSubmitting ? (
-                      <>
-                          <Loader2 size={24} className="relative z-10 animate-spin" />
-                          <span className="relative z-10">Saving...</span>
-                      </>
-                  ) : (
-                      <>
-                          <Check size={24} className="relative z-10" />
-                          <span className="relative z-10">Complete Setup</span>
-                      </>
-                  )}
+                  <Check size={24} className="relative z-10" />
+                  <span className="relative z-10">Complete Setup</span>
                   <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700"></div>
-                </button>
+                </Button>
               )}
             </div>
           </div>
