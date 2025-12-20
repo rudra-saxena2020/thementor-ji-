@@ -295,7 +295,11 @@ const TutorSession: React.FC<TutorSessionProps> = ({ aiGuidance }) => {
                 newEls.push({
                     id: aiContentId + '-text',
                     type: 'text',
-                    content: `Here is the explanation for: ${userPrompt}\n\n1. Key Concept Identification\n2. Application of Principles\n3. Conclusion`,
+                    content: `Here is the explanation for: ${userPrompt}
+
+1. Key Concept Identification
+2. Application of Principles
+3. Conclusion`,
                     x: 50,
                     y: startY + 80
                 });
@@ -513,8 +517,9 @@ const TutorSession: React.FC<TutorSessionProps> = ({ aiGuidance }) => {
           {boardElements.length === 0 && !isDrawing && (
              <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
                  <div className="text-center max-w-lg pointer-events-auto animate-fade-in p-6">
-                    <div className="w-20 h-20 bg-gradient-to-tr from-primary-purple to-primary-blue rounded-full mx-auto mb-6 flex items-center justify-center shadow-2xl shadow-primary-purple/30 animate-float">
-                        <Sparkles size={32} className="text-white" />
+                    <div className="w-20 h-20 bg-gradient-to-tr from-primary-purple to-primary-blue rounded-full mx-auto mb-6 flex items-center justify-center shadow-2xl shadow-primary-purple/30 animate-float group cursor-pointer transition-all duration-500 hover:scale-110 hover:shadow-primary-purple/50">
+                        <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-primary-purple to-primary-blue opacity-30 blur-xl animate-pulse transition-all duration-500 group-hover:opacity-50"></div>
+                        <Sparkles size={32} className="text-white relative z-10 transition-transform duration-500 group-hover:rotate-12" />
                     </div>
                     <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white mb-3">Hi Student!</h2>
                     <p className="text-base md:text-lg text-slate-500 dark:text-slate-400 mb-8 font-medium">
@@ -526,9 +531,9 @@ const TutorSession: React.FC<TutorSessionProps> = ({ aiGuidance }) => {
                             <button 
                                 key={s}
                                 onClick={() => handleSuggestionClick(s)}
-                                className="px-4 py-2 bg-white/50 dark:bg-white/5 border border-white/20 rounded-full text-xs md:text-sm font-bold text-slate-600 dark:text-slate-300 hover:border-primary-purple hover:text-primary-purple transition-all shadow-sm hover:shadow-md"
+                                className="px-4 py-2 bg-white/50 dark:bg-white/5 border border-white/20 rounded-full text-xs md:text-sm font-bold text-slate-600 dark:text-slate-300 hover:border-primary-purple hover:text-primary-purple transition-all shadow-sm hover:shadow-md hover:scale-105 group"
                             >
-                                {s}
+                                <span className="group-hover:text-primary-purple transition-colors duration-300">{s}</span>
                             </button>
                         ))}
                     </div>

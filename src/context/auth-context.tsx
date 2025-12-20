@@ -85,7 +85,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   });
 
   useEffect(() => {
-    const initAuth = () => {
+    const initAuth = async () => {
       // 1. Check URL for token (Google Redirect)
       const params = new URLSearchParams(window.location.search);
       const urlToken = params.get('token');
@@ -126,6 +126,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         } else {
            // Handle Real JWT
            try {
+              // First, try to decode the token
               const decoded: any = jwtDecode(token);
               const currentTime = Math.floor(Date.now() / 1000);
 
@@ -135,7 +136,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 setIsLoading(false);
                 return;
               }
-              userData = normalizeUser(decoded);
+              
+              // If we have a token from URL, fetch fresh user data from backend
+              if (urlToken) {
+                try {
+                  const response = await fetchUserInfo(urlToken);
+                  if (response.user) {
+                    userData = response.user;
+                    // Set expiration from token
+                    userData.exp = decoded.exp;
+                  } else {
+                    // Fallback to decoded token data
+                    userData = normalizeUser(decoded);
+                  }
+                } catch (fetchError) {
+                  console.error("Failed to fetch user data from backend, using token data:", fetchError);
+                  userData = normalizeUser(decoded);
+                }
+              } else {
+                // For existing tokens, use decoded data but allow profile refresh
+                userData = normalizeUser(decoded);
+              }
            } catch (error) {
               console.error("Token decoding failed:", error);
               logout();
@@ -144,7 +165,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
            }
         }
 
-        // If valid user data found (from Mock or JWT)
+        // If valid user data found
         if (userData) {
            // If valid and from URL, save it
            if (urlToken) {
@@ -158,7 +179,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
            
            const finalUser: User = storedProfile ? { 
              ...storedProfile,
-             // Enforce fresh identity from token
+             // Enforce fresh identity from token/backend
              name: userData.name,
              email: userData.email,
              avatar: userData.avatar, 
