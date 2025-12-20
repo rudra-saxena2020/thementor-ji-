@@ -23,6 +23,10 @@ import {
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/auth-context';
+import { Button } from '../components/ui/button';
+import { Card } from '../components/ui/card';
+import { Badge } from '../components/ui/badge';
+import { cn } from '../utils/cn';
 
 interface DashboardHomeProps {
   aiGuidance: AIResponse;
@@ -104,20 +108,19 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({ aiGuidance }) => {
 
   const QuickActionCard = ({ icon: Icon, title, desc, to, colorClass }: any) => {
     return (
-      <Link 
-          to={to} 
-          className="group relative glass-panel rounded-[2rem] p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary-purple/30 overflow-hidden flex flex-col justify-between min-h-[160px]"
-      >
-        <div className={`absolute top-0 right-0 w-24 h-24 bg-gradient-to-br ${colorClass} opacity-10 rounded-bl-full transition-transform group-hover:scale-150`}></div>
-        
-        <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${colorClass} flex items-center justify-center text-white shadow-md mb-4 group-hover:scale-110 transition-transform`}>
-            <Icon size={24} />
-        </div>
-        
-        <div>
-            <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-1 group-hover:text-primary-purple transition-colors">{title}</h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">{desc}</p>
-        </div>
+      <Link to={to} className="block group">
+        <Card variant="glass" className="relative transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary-purple/30 overflow-hidden flex flex-col justify-between min-h-[160px] group">
+          <div className={cn("absolute top-0 right-0 w-24 h-24 bg-gradient-to-br opacity-10 rounded-bl-full transition-transform group-hover:scale-150", colorClass)}></div>
+          
+          <div className={cn("w-12 h-12 rounded-2xl bg-gradient-to-br flex items-center justify-center text-white shadow-md mb-4 group-hover:scale-110 transition-transform", colorClass)}>
+              <Icon size={24} />
+          </div>
+          
+          <div>
+              <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-1 group-hover:text-primary-purple transition-colors">{title}</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">{desc}</p>
+          </div>
+        </Card>
       </Link>
     );
   };
@@ -127,10 +130,10 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({ aiGuidance }) => {
       
       {/* Top Meta Bar */}
       <div className="flex justify-end">
-         <div className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider border shadow-sm glass-panel ${isOnline ? 'text-emerald-600' : 'text-slate-500'}`}>
-            {isOnline ? <Wifi size={12} /> : <WifiOff size={12} />}
-            {isOnline ? 'System Online' : 'Offline Mode'}
-         </div>
+        <Badge variant={isOnline ? "success" : "destructive"} className="gap-2 px-3 py-1.5">
+          {isOnline ? <Wifi size={12} /> : <WifiOff size={12} />}
+          {isOnline ? 'System Online' : 'Offline Mode'}
+        </Badge>
       </div>
 
       {/* Hero Section - Voice Orb Central */}
@@ -146,10 +149,13 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({ aiGuidance }) => {
              </p>
              
              {/* Voice Input Trigger */}
-             <button className="mt-6 mx-auto flex items-center gap-3 px-8 py-4 bg-gradient-primary rounded-full text-white font-bold shadow-lg shadow-primary-purple/30 hover:shadow-primary-purple/50 hover:scale-105 transition-all group">
-                 <Mic size={24} className="group-hover:animate-bounce" />
+             <Button 
+                size="lg" 
+                className="mt-6 mx-auto rounded-full font-bold shadow-lg shadow-primary-purple/30 hover:shadow-primary-purple/50 hover:scale-105 transition-all group bg-gradient-primary border-none h-16 px-10"
+             >
+                 <Mic size={24} className="mr-3 group-hover:animate-bounce" />
                  <span>Tap to Speak</span>
-             </button>
+             </Button>
          </div>
       </div>
 
@@ -189,7 +195,7 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({ aiGuidance }) => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
          
          {/* Daily Progress */}
-         <div className="glass-panel p-8 rounded-[2.5rem] relative overflow-hidden group">
+         <Card variant="glass" className="p-8 rounded-[2.5rem] relative overflow-hidden group">
              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-primary opacity-20 rounded-bl-full transition-transform group-hover:scale-150"></div>
              <h3 className="font-bold text-slate-800 dark:text-white text-lg mb-6 flex items-center gap-2">
                  <Activity size={20} className="text-primary-blue" /> Daily Goal
@@ -225,16 +231,16 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({ aiGuidance }) => {
          </div>
 
          {/* Motivational Carousel */}
-         <div className="lg:col-span-2 glass-panel p-8 rounded-[2.5rem] relative overflow-hidden flex flex-col justify-center">
+         <Card variant="glass" className="lg:col-span-2 p-8 rounded-[2.5rem] relative overflow-hidden flex flex-col justify-center">
             <div className="absolute top-0 left-0 w-2 h-full bg-gradient-pink"></div>
             <div className="absolute -bottom-10 -right-10 text-slate-200 dark:text-white/5 transform rotate-12"><Quote size={180} /></div>
             
             <div className="relative z-10">
                 <div className="flex justify-between items-center mb-6">
-                    <span className="px-3 py-1 bg-pink-100 dark:bg-pink-900/30 text-primary-pink text-xs font-bold uppercase rounded-full">Daily Inspiration</span>
+                    <Badge variant="secondary" className="bg-pink-100 dark:bg-pink-900/30 text-primary-pink border-none">Daily Inspiration</Badge>
                     <div className="flex gap-2">
-                        <button onClick={prevQuote} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"><ChevronLeft size={20} /></button>
-                        <button onClick={nextQuote} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"><ChevronRight size={20} /></button>
+                        <Button variant="ghost" size="icon" onClick={prevQuote} className="rounded-full"><ChevronLeft size={20} /></Button>
+                        <Button variant="ghost" size="icon" onClick={nextQuote} className="rounded-full"><ChevronRight size={20} /></Button>
                     </div>
                 </div>
                 
@@ -246,11 +252,11 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({ aiGuidance }) => {
                     <p className="font-bold text-slate-500 uppercase tracking-wider text-sm">{motivationalQuotes[quoteIndex].author}</p>
                 </div>
             </div>
-         </div>
+         </Card>
       </div>
 
       {/* Recent Activity List */}
-      <div className="glass-panel p-8 rounded-[2.5rem]">
+      <Card variant="glass" className="p-8 rounded-[2.5rem]">
           <div className="flex justify-between items-center mb-6">
               <h3 className="font-bold text-slate-800 dark:text-white text-lg flex items-center gap-2">
                   <HistoryIcon size={20} className="text-primary-purple" /> Recent Activity
@@ -288,7 +294,7 @@ const DashboardHome: React.FC<DashboardHomeProps> = ({ aiGuidance }) => {
                   <div className="text-center py-8 text-slate-500">No recent activity</div>
               )}
           </div>
-      </div>
+      </Card>
     </div>
   );
 };

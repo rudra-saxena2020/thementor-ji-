@@ -6,39 +6,28 @@
 
 This project is a React-based educational platform enhanced with AI capabilities.
 
-## Project Structure
+## 📚 Documentation
 
-The project follows a modular and scalable structure designed for maintainability and separation of concerns.
+- [Project Structure](./docs/structure.md) - Detailed explanation of the folder structure.
+- [Design System](./docs/design-system.md) - Colors, typography, and component API.
+- [Animation System](./docs/animation-system.md) - Animation guidelines and examples.
+- [Performance Report](./docs/performance-report.md) - Optimization metrics and strategies.
+- [QA Test Plan](./docs/qa-test-plan.md) - Testing strategy and matrix.
+- [UX Audit](./docs/ux-audit.md) - UX findings and roadmap.
 
-```
-Root/
-├── src/                    # Primary source code
-│   ├── components/         # Reusable UI components (colocated with styles/tests)
-│   ├── pages/              # Page-level components (views)
-│   ├── services/           # API services and external integrations (e.g., AI, Auth)
-│   ├── context/            # React Context providers (Global state)
-│   ├── utils/              # Shared utility functions
-│   ├── data/               # Static and mock data files
-│   ├── assets/             # Static assets (images, icons)
-│   ├── app.tsx             # Main application component
-│   └── main.tsx            # Application entry point
-├── tests/                  # Test suites
-│   ├── unit/               # Unit tests
-│   └── integration/        # Integration tests
-├── docs/                   # Project documentation
-├── config/                 # Configuration files
-└── public/                 # Public static files
-```
+## 🎨 Design System
 
-### Key Conventions
+The application uses a custom design system built on top of Tailwind CSS.
+- **Framework:** React + Tailwind CSS
+- **Icons:** Lucide React
+- **Theme:** Dark/Light mode support with semantic colors.
 
-- **File Naming**: Kebab-case (e.g., `user-auth-info.tsx`, `dashboard-ai.ts`) is used for all files and directories.
-- **Colocation**: Related files are kept together.
-- **Components**: Reusable UI elements located in `src/components`.
-- **Pages**: Top-level views located in `src/pages`.
-- **Services**: Business logic and API calls in `src/services`.
+### Key Components
+- **Glass Panel:** `.glass-panel` for the signature frosted glass look.
+- **Premium Card:** `.premium-card` for standard content containers.
+- **Animations:** Custom keyframes for `fade-in`, `slide-up`, `float`, etc.
 
-## Run Locally
+## 🚀 Getting Started
 
 **Prerequisites:** Node.js
 

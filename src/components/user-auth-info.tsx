@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/auth-context';
 import { RefreshCw, LogOut, User, Mail, Key, Download } from 'lucide-react';
 import { useToast } from '../context/toast-context';
+import { Card } from './ui/card';
+import { Button } from './ui/button';
 
 const UserAuthInfo: React.FC = () => {
   const { user, refreshToken, logout, fetchUserProfile } = useAuth();
@@ -59,9 +61,9 @@ const UserAuthInfo: React.FC = () => {
   }
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+    <Card className="p-6 border border-slate-200 dark:border-slate-700 shadow-sm bg-white dark:bg-slate-800">
       <h3 className="font-bold text-slate-800 dark:text-white mb-4 flex items-center gap-2">
-        <Key className="text-blue-500" size={20} />
+        <Key className="text-primary" size={20} />
         Authentication Info
       </h3>
       
@@ -98,34 +100,37 @@ const UserAuthInfo: React.FC = () => {
       </div>
       
       <div className="flex gap-3 mt-6">
-        <button
+        <Button
           onClick={handleFetchProfile}
-          disabled={isFetchingProfile}
-          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-purple-500 hover:bg-purple-600 text-white rounded-xl font-bold text-sm transition-colors disabled:opacity-70"
+          isLoading={isFetchingProfile}
+          className="flex-1"
+          variant="default"
         >
-          <Download size={16} className={isFetchingProfile ? 'animate-spin' : ''} />
+          {!isFetchingProfile && <Download size={16} className="mr-2" />}
           {isFetchingProfile ? 'Fetching...' : 'Fetch Profile'}
-        </button>
+        </Button>
         
-        <button
+        <Button
           onClick={handleRefreshToken}
-          disabled={isRefreshing}
-          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-blue-500 hover:bg-blue-600 text-white rounded-xl font-bold text-sm transition-colors disabled:opacity-70"
+          isLoading={isRefreshing}
+          className="flex-1"
+          variant="secondary"
         >
-          <RefreshCw size={16} className={isRefreshing ? 'animate-spin' : ''} />
+          {!isRefreshing && <RefreshCw size={16} className="mr-2" />}
           {isRefreshing ? 'Refreshing...' : 'Refresh Token'}
-        </button>
+        </Button>
         
-        <button
+        <Button
           onClick={handleLogout}
-          disabled={isLoggingOut}
-          className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-red-500 hover:bg-red-600 text-white rounded-xl font-bold text-sm transition-colors disabled:opacity-70"
+          isLoading={isLoggingOut}
+          className="flex-1"
+          variant="destructive"
         >
-          <LogOut size={16} className={isLoggingOut ? 'animate-spin' : ''} />
+          {!isLoggingOut && <LogOut size={16} className="mr-2" />}
           {isLoggingOut ? 'Logging out...' : 'Logout'}
-        </button>
+        </Button>
       </div>
-    </div>
+    </Card>
   );
 };
 
