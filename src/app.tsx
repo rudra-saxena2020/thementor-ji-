@@ -135,7 +135,21 @@ const MainLayout: React.FC = () => {
   }
 
   // Profile Completeness Gate
-  if (user && !user.class) {
+  // Only show onboarding if user hasn't completed it before
+  const hasCompletedOnboarding = (userId: string): boolean => {
+    try {
+      const storedProfile = localStorage.getItem(`tutorji_profile_${userId}`);
+      if (storedProfile) {
+        const profile = JSON.parse(storedProfile);
+        return profile && profile.class !== undefined && profile.class !== null;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
+  };
+
+  if (user && !user.class && !hasCompletedOnboarding(user.id)) {
     return <OnboardingForm />;
   }
 
