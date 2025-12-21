@@ -18,6 +18,7 @@ import {
   Mic,
   ArrowUpRight,
   Play,
+  Sparkles,
   History as HistoryIcon
 } from 'lucide-react';
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
