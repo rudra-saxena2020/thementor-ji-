@@ -84,6 +84,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     joinedDate: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
   });
 
+  // Helper: Check if user has completed onboarding previously
+  const hasCompletedOnboarding = (userId: string): boolean => {
+    try {
+      const profile = getStoredProfile(userId);
+      return profile && profile.class !== undefined && profile.class !== null;
+    } catch (e) {
+      return false;
+    }
+  };
+
   useEffect(() => {
     const initAuth = async () => {
       // 1. Check URL for token (Google Redirect)
@@ -199,7 +209,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
            saveStoredProfile(finalUser);
 
            // CHECK ONBOARDING STATUS
-           if (!finalUser.class) {
+           // Only show onboarding if user hasn't completed it before
+           if (!finalUser.class && !hasCompletedOnboarding(finalUser.id)) {
               setNeedsOnboarding(true); 
            }
         }
@@ -233,7 +244,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(dummyUser);
       setIsAuthenticated(true);
       
-      if (!dummyUser.class) {
+      // For demo users, check if they've completed onboarding before
+      if (!dummyUser.class && !hasCompletedOnboarding(dummyUser.id)) {
         setNeedsOnboarding(true);
       }
       localStorage.setItem('auth_token', 'mock-token-demo'); 
@@ -265,9 +277,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setUser(guestUser);
       setIsAuthenticated(true);
       
-      if (!guestUser.class) {
+      // For guest users, check if they've completed onboarding before
+      if (!guestUser.class && !hasCompletedOnboarding(guestUser.id)) {
         setNeedsOnboarding(true);
       }
+      
       localStorage.setItem('auth_token', 'mock-token-guest');
       saveStoredProfile(guestUser);
       setIsLoading(false);

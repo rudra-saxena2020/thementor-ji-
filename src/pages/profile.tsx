@@ -105,13 +105,9 @@ const Profile: React.FC<ProfileProps> = ({ aiGuidance }) => {
                           <div className="space-y-1 w-full md:w-auto">
                              {isEditing ? (
                                 <div className="space-y-3 max-w-md mx-auto md:mx-0">
-                                    <input 
-                                    type="text" 
-                                    value={formData.name}
-                                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                                    className="block w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg text-2xl font-bold focus:ring-2 focus:ring-violet-500 outline-none text-center md:text-left dark:text-white"
-                                    placeholder="Your Name"
-                                    />
+                                    <div className="block w-full px-3 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-600 rounded-lg text-2xl font-bold text-center md:text-left dark:text-white">
+                                        {formData.name}
+                                    </div>
                                     <input 
                                     type="text" 
                                     value={formData.location}

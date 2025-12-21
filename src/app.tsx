@@ -94,6 +94,7 @@ const MainLayout: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [aiGuidance, setAiGuidance] = useState<AIResponse | null>(null);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [hasFetchedProfile, setHasFetchedProfile] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -105,6 +106,18 @@ const MainLayout: React.FC = () => {
       window.removeEventListener('offline', handleStatusChange);
     };
   }, []);
+
+  // Auto-fetch user profile on app load
+  useEffect(() => {
+    if (isAuthenticated && user && !hasFetchedProfile) {
+      // Small delay to ensure app is fully loaded
+      const timer = setTimeout(() => {
+        fetchUserProfile();
+        setHasFetchedProfile(true);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [isAuthenticated, user, hasFetchedProfile, fetchUserProfile]);
 
   if (isLoading) {
     return <div className="h-screen w-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950"><Loader2 className="animate-spin text-primary" size={32} /></div>;
