@@ -46,10 +46,10 @@ Manages authentication state throughout the application:
 - Handles token refresh
 
 ### UserAuthInfo (`components/UserAuthInfo.tsx`)
-Displays authentication information in the Profile page:
-- Shows user ID, email, and token expiry
-- Provides token refresh button
-- Provides logout button
+Authentication information component (for administrative use only):
+- Previously displayed user ID, email, and token expiry on profile page
+- Provided token refresh and logout buttons
+- **Note:** This component is no longer displayed on the user profile page as authentication information is intended for administrative purposes only
 
 ### AuthTestPage (`components/AuthTestPage.tsx`)
 Dedicated page for testing authentication features:

@@ -77,6 +77,12 @@ const Profile: React.FC<ProfileProps> = ({ aiGuidance }) => {
              <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle, white 2px, transparent 2px)', backgroundSize: '24px 24px' }}></div>
              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
              
+             {/* User Name Overlay */}
+             <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6">
+               <h2 className="text-2xl md:text-4xl font-bold text-white drop-shadow-lg">{user?.name || 'Student'}</h2>
+               <p className="text-white/90 text-sm md:text-base drop-shadow-md">{user?.class ? `Class ${user.class}` : 'Learning Journey'}</p>
+             </div>
+             
              <button className="absolute top-4 right-4 md:top-6 md:right-6 bg-black/30 hover:bg-black/50 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-xl backdrop-blur-md transition-all opacity-0 group-hover:opacity-100 flex items-center gap-2 text-xs font-bold uppercase tracking-wider border border-white/20">
                <Camera size={14} className="md:w-4 md:h-4" /> <span className="hidden md:inline">Change Cover</span>
              </button>
