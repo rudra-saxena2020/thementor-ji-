@@ -90,7 +90,7 @@ const TutorWrapper: React.FC<{
 
 // Main Layout component that requires Authentication
 const MainLayout: React.FC = () => {
-  const { isAuthenticated, isLoading, needsOnboarding, user } = useAuth();
+  const { isAuthenticated, isLoading, needsOnboarding, user, fetchUserProfile } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [aiGuidance, setAiGuidance] = useState<AIResponse | null>(null);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
