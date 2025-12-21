@@ -13,8 +13,7 @@ interface PremiumAvatarProps {
 const AvatarMesh = ({ imageUrl, enableTracking }: { imageUrl: string; enableTracking: boolean }) => {
   const meshRef = useRef<Mesh>(null);
   
-  // Use suspense-enabled loader with error handling
-  // We use a try-catch pattern indirectly via useLoader's behavior or fallback
+  // Use suspense-enabled loader
   const texture = useLoader(TextureLoader, imageUrl);
   
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
@@ -226,14 +225,35 @@ const AvatarMesh = ({ imageUrl, enableTracking }: { imageUrl: string; enableTrac
   );
 };
 
-const FallbackAvatar = ({ imageUrl }: { imageUrl: string }) => (
-  <img src={imageUrl} alt="Avatar" className="w-full h-full object-cover" />
-);
+const FallbackAvatar = ({ imageUrl }: { imageUrl: string }) => {
+  const [imageError, setImageError] = useState(false);
+  
+  // Handle case where imageUrl is empty or invalid
+  if (!imageUrl || imageError) {
+    return (
+      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-200 to-slate-300 dark:from-slate-700 dark:to-slate-800">
+        <div className="text-2xl font-bold text-slate-500 dark:text-slate-400">?</div>
+      </div>
+    );
+  }
+  
+  return (
+    <img 
+      src={imageUrl} 
+      alt="Avatar" 
+      className="w-full h-full object-cover" 
+      onError={() => setImageError(true)}
+    />
+  );
+};
 
 // Error Boundary for the specific Canvas component
 class AvatarErrorBoundary extends React.Component<{ fallback: React.ReactNode, children: React.ReactNode }, { hasError: boolean }> {
   state = { hasError: false };
   static getDerivedStateFromError() { return { hasError: true }; }
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('Avatar rendering error:', error, errorInfo);
+  }
   render() {
     if (this.state.hasError) return this.props.fallback;
     return this.props.children;

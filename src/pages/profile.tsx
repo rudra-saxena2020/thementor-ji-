@@ -4,7 +4,7 @@ import { User, Mail, Award, BookOpen, Camera, Edit2, Save, X, Link as LinkIcon, 
 import { useAuth } from '../context/auth-context';
 import { useToast } from '../context/toast-context';
 import PremiumAvatar from '../components/premium-avatar';
-import UserAuthInfo from '../components/user-auth-info';
+
 import { PREMIUM_AVATARS } from '../data/static-data';
 
 interface ProfileProps {
@@ -288,10 +288,8 @@ const Profile: React.FC<ProfileProps> = ({ aiGuidance }) => {
                </div>
            </div>
            
-           {/* Achievements & Auth Info */}
+           {/* Achievements */}
            <div className="space-y-8">
-               <UserAuthInfo />
-               
                <div className="bg-white dark:bg-slate-800 rounded-[2.5rem] border border-slate-200 dark:border-slate-700 p-6 md:p-8 shadow-sm">
                    <h3 className="font-bold text-slate-800 dark:text-white mb-8 flex items-center gap-3 text-lg">
                        <div className="p-2 bg-amber-100 dark:bg-amber-900/30 rounded-lg text-amber-600"><Award size={20} /></div>
