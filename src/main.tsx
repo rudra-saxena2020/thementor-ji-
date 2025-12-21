@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { HashRouter } from 'react-router-dom';
 import './index.css';
-import App from './app';
+import MainLayout from './app';
 import ErrorBoundary from './components/error-boundary';
 import { AuthProvider } from './context/auth-context';
 import { ThemeProvider } from './context/theme-context';
@@ -23,7 +23,7 @@ root.render(
           <ThemeProvider>
             <LanguageProvider>
               <ToastProvider>
-                <App />
+                <MainLayout />
               </ToastProvider>
             </LanguageProvider>
           </ThemeProvider>
